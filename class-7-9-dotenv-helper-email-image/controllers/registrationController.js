@@ -6,7 +6,7 @@ const transporter = require("../helper/mail_transporter");
 const User = require("../models/UserModel");
 
 const email_template = require("../helper/email_template");
-const replaceTemplateValues = require("../helper/replaceTemplateValues")
+const renderTemplate = require("../helper/renderTemplate")
 
 const salt = bcrypt.genSaltSync(10);
 
@@ -41,7 +41,7 @@ let registrationController = async (req, res) => {
             });
         }else{
             user.save().then(async (u) => {
-                let html = replaceTemplateValues(email_template, {fullname: u.name, email: u.email})
+                let html = renderTemplate(email_template, {fullname: u.name, email: u.email})
 
                 await transporter.sendMail({
                     from: '"Ariful Alam" <aatuhin@gmail.email>', // sender address

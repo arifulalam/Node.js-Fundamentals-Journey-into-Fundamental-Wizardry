@@ -1,4 +1,4 @@
-function replaceTemplateValues(template, values){
+function renderTemplate(template, values){
     let html = template;
     for (let key in values) {
         html = html.replace(new RegExp('{{' + key + '}}', 'g'), values[key]);
@@ -6,4 +6,4 @@ function replaceTemplateValues(template, values){
     return html;
 }
 
-module.exports = replaceTemplateValues
+module.exports = renderTemplate
