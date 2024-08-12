@@ -19,15 +19,15 @@
 
 
 **Steps:** <br/>
-1. create a project directory (i.e: project-1-ToDo-List)
-2. enter to the directory `cd project*`
-3. create a `index.js` file
-4. run `npm init`
-5. type project name, project version, author name etc by pressing enter after each data.
-6. this will create a `package.json` file in project
-7. run `npm i express` (NodeJS framework)
-8. run `npm i validator` (to use to validate user input)
-9. run `npm i bcrypt` (to encrypt password)
+01. create a project directory (i.e: project-1-ToDo-List)
+02. enter to the directory `cd project*`
+03. create a `index.js` file
+04. run `npm init`
+05. type project name, project version, author name etc by pressing enter after each data.
+06. this will create a `package.json` file in project
+07. run `npm i express` (NodeJS framework)
+08. run `npm i validator` (to use to validate user input)
+09. run `npm i bcrypt` (to encrypt password)
 10. run `npm i nodemon` (to run server automatically after each save)
 11. add `"start": "nodemon index.js",` inside `scripts` block
 12. run `npm i mongodb` (to install MongoDB database)

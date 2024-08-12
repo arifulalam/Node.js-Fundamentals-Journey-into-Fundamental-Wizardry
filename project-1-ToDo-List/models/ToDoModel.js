@@ -5,7 +5,7 @@ const {Schema} = mongoose;
 
 const todoSchema = new Schema({
     userId: { 
-        type: Schema.Types.ObjectId, 
+        type: mongoose.Schema.Types.ObjectId, 
         ref: 'user' 
     },
     title: {

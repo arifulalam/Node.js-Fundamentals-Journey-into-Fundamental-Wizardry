@@ -1,16 +1,19 @@
-require('dotenv').config()
+require('dotenv').config();
 const express = require("express");
 const mongo = require("mongodb");
+const multer = require("multer");
+const uuid = require("uuid");
+const path = require("path");
+const bcrypt = require("bcrypt");
+
 const mongoose = require("mongoose");
 const validator = require("validator");
-const bcrypt = require("bcrypt");
 
 const dbConnection = require("./helpers/dbConnection");
 dbConnection();
 
 const User = require("./models/UserModel");
 const Todo = require("./models/ToDoModel");
-
 
 const security = require("./middleware/security");
 const registrationController = require("./controllers/registrationController");
@@ -30,6 +33,19 @@ const salt = bcrypt.genSaltSync(10);
 //Express
 const app = express();
 app.use(express.json());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = uuid.v4();
+    cb(null, `${uniqueSuffix}-${file.originalname}`);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 app.get("/", (req, res) => {
   console.log("Home API");
@@ -40,17 +56,17 @@ app.post("/registration", registrationController);
 
 /*
 ariful-alam = W0r1d@#1
-arshaduzzaman = W0r1d$#Bangla
+arshaduzzaman = W0r1d@#1
 */
 app.post("/login", loginController);
 
-app.post("/todo-create/:username", security, createTodoController);
+app.post("/todo-create/:username", security, upload.single("image"), createTodoController);
 
-app.put("/todo-edit/:username/:id", security, editTodoController);
+app.put("/todo-edit/:username?/:id?", security, editTodoController);
 
-app.delete("/todo-delete/:username/:id", security, deleteTodoController);
+app.delete("/todo-delete/:username/:id?", security, deleteTodoController);
 
-app.get("/todos/:username/:id", viewTodoController);
+app.get("/todos/:username?/:id?", viewTodoController);
 
 app.listen(8000, () => {
   console.log("NodeJS Express Server started successfully.");
